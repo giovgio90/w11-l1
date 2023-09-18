@@ -1,38 +1,32 @@
-import { useEffect, useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { useEffect } from "react";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import Job from "./Job";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { searchCompanyJobs } from "../redux/reducers/action";
 
 const CompanySearchResults = () => {
-  const [jobs, setJobs] = useState([]);
   const params = useParams();
-
-  const baseEndpoint = "https://strive-benchmark.herokuapp.com/api/jobs?company=";
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getJobs();
+    dispatch(searchCompanyJobs(params.company));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch, params.company]);
 
-  const getJobs = async () => {
-    try {
-      const response = await fetch(baseEndpoint + params.company);
-      if (response.ok) {
-        const { data } = await response.json();
-        setJobs(data);
-      } else {
-        alert("Error fetching results");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const jobs = useSelector((state) => state.searchResults.jobs);
 
   return (
     <Container>
       <Row>
-        <Col className="my-3">
+        <Col xs={10} className="d-flex align-items-center mx-auto my-3">
           <h1 className="display-4">Job posting for: {params.company}</h1>
+          <Button variant="outline-danger" onClick={() => navigate("/favourites")}>
+            Back to Favourites
+          </Button>
+        </Col>
+        <Col xs={10} className="mx-auto my-3">
           {jobs.map((jobData) => (
             <Job key={jobData._id} data={jobData} />
           ))}

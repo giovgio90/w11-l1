@@ -15,8 +15,8 @@ const Favourites = () => {
       <Row>
         <Col xs={10} className="d-flex align-items-center mx-auto my-3">
           <h1 className="display-4 me-auto">Favourites</h1>
-          <Button variant="outline-primary" onClick={() => navigate("/")}>
-            go to Home
+          <Button variant="outline-danger" onClick={() => navigate("/")}>
+            Back to Home
           </Button>
         </Col>
         <Col xs={10} className="mx-auto my-3">
@@ -30,7 +30,7 @@ const Favourites = () => {
               ))
             ) : (
               <ListGroup.Item>
-                No favourites yet, go <Link to="/">back to Homepage</Link> to select some
+                No favourites yet, go <Link to="/">Back to Homepage</Link> to select some
               </ListGroup.Item>
             )}
           </ListGroup>
