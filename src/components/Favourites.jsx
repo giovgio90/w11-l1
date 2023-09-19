@@ -2,7 +2,7 @@ import { Container, Row, Col, ListGroup, Button } from "react-bootstrap";
 import { Trash } from "react-bootstrap-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { removeFromFavourite } from "../redux/reducers/action";
+import { removeFromFavourite } from "../redux/actions/action";
 
 const Favourites = () => {
   const favourites = useSelector((state) => state.favourite.list);

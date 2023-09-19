@@ -2,7 +2,7 @@ import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Heart, HeartFill } from "react-bootstrap-icons";
 import { useSelector, useDispatch } from "react-redux";
-import { addToFavouriteAction2, removeFromFavourite } from "../redux/reducers/action";
+import { addToFavouriteAction2, removeFromFavourite } from "../redux/actions/action";
 
 const Job = ({ data }) => {
   const favourites = useSelector((state) => state.favourite.list);

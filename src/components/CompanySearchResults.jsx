@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Spinner, Alert } from "react-bootstrap";
 import Job from "./Job";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { searchCompanyJobs } from "../redux/reducers/action";
+import { searchCompanyJobs } from "../redux/actions/action";
 
 const CompanySearchResults = () => {
   const params = useParams();
@@ -15,6 +15,8 @@ const CompanySearchResults = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, params.company]);
 
+  const loading = useSelector((state) => state.searchResults.loading);
+  const error = useSelector((state) => state.searchResults.error);
   const jobs = useSelector((state) => state.searchResults.jobs);
 
   return (
@@ -27,9 +29,9 @@ const CompanySearchResults = () => {
           </Button>
         </Col>
         <Col xs={10} className="mx-auto my-3">
-          {jobs.map((jobData) => (
-            <Job key={jobData._id} data={jobData} />
-          ))}
+          {loading && <Spinner animation="border" />}
+          {error && <Alert variant="danger">Errore nel caricamento dei lavori</Alert>}
+          {!loading && !error && jobs.map((jobData) => <Job key={jobData._id} data={jobData} />)}
         </Col>
       </Row>
     </Container>
